@@ -1,32 +1,60 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div>
+      <h1> Header (Parent Component) </h1>
     </div>
-    <router-view/>
+    <hr>
+    <div>
+      <h3> Show Developer (child component)</h3>
+      <p>Developer: {{showName}}</p>
+      <p>Languages: <span v-for="(lang, index) in languages" :key="index" >
+         <span v-if="lang.checked == true"> {{lang.name}},</span> 
+        </span> </p>
+    </div>
+    <hr>
+    <h3>Edit Developer (child component)</h3>
+    <input type="text" placeholder="developer name" v-model="name">
+    <button @click="changeName()">Change Name</button>
+    <br><br>
+
+    <li id="lang" v-for="(lang, index) in languages" :key="index">
+          <label for="lang">
+      <input type="checkbox" @click="clicked(lang)">
+        <span>{{lang.name}}</span>
+    </label>
+    </li>
+
   </div>
 </template>
 
+<script>
+export default {
+  data(){
+    return{
+      showName:'',
+      name:'',
+      languages:[
+        {name:'Javascript', checked:false },
+        {name:'Ruby', checked:false },
+        {name:'Python', checked:false },
+        {name:'Java', checked:false },
+        {name:'Swift', checked:false }
+      ]
+    }
+  },
+  methods:{
+    changeName(){
+      this.showName = this.name
+    },
+    clicked(lang){
+      lang.checked = !lang.checked
+    }
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.red{
+  color: red;
 }
 </style>
